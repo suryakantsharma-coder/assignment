@@ -4,10 +4,11 @@ import { useWallet } from '../context/walletProvider';
 import { formatUnits } from 'ethers';
 
 function useFetchHook() {
-  const [data, setData] = useState<Array<any>>();
-  const { provider, address: WalletAddress } = useWallet();
-  const [protfolio, setProtfolio] = useState();
+  const [data, setData] = useState<Array<any>>(); // store token info
+  const { provider, address: WalletAddress } = useWallet(); // wallet context
+  const [protfolio, setProtfolio] = useState(); // store protfolio value
 
+  // here is the function to fetch the tokens
   const fetchTokens = async (addresses: Array<string>) => {
     try {
       if (provider && WalletAddress) {
@@ -16,8 +17,8 @@ function useFetchHook() {
         });
 
         const data = await Promise.allSettled(tokens);
-        console.log({ data });
         let protfolioValue: any = 0;
+
         const tokenInfo = data?.map((item) => {
           if (item.status === 'fulfilled' && item?.value !== null) {
             const tokenValue = formatUnits(item?.value?.balance, item?.value?.decimals);

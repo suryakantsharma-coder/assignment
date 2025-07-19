@@ -1,6 +1,7 @@
 import { Contract, Provider } from 'ethers';
 import { Erc20ABI } from '../constant/abi';
 
+// it's api free to fetch token info on different network no need any cost.
 export const getCoinInfo = async (contractAddress: string, provider: Provider, address: string) => {
   try {
     const contract = new Contract(contractAddress, Erc20ABI, provider);

@@ -5,12 +5,13 @@ import { useEffect } from 'react';
 import { useWallet } from '../context/walletProvider';
 
 function Protfolio() {
-  const { contractAddress, storeContracts } = useStorageHook();
-  const { connect, provider } = useWallet();
-  const { data, fetchTokens, protfolio } = useFetchHook();
+  const { contractAddress, storeContracts } = useStorageHook(); // storage hook
+  const { connect, provider } = useWallet(); // wallet hook
+  const { data, fetchTokens, protfolio } = useFetchHook(); // fetch hook
 
+  // prevent from unnecessary fetch only fetch wallet connects
   useEffect(() => {
-    if (contractAddress?.length > 0) fetchTokens(contractAddress);
+    if (contractAddress?.length > 0 && provider) fetchTokens(contractAddress); // fetch tokens
   }, [contractAddress, provider]);
 
   return (
